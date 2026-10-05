@@ -9,7 +9,7 @@
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green"></a>
 </p>
 
-<p align="center"><img alt="TraceLens demo" src="https://raw.github.com/maryamtahir9/tracelens/blob/main/docs/images/tracelens-demo.gif" width="860"></p>
+<p align="center"><img alt="TraceLens demo" src="https://raw.githubusercontent.com/maryamtahir9/tracelens/main/docs/images/tracelens-demo.gif" width="860"></p>
 
 TraceLens runs a function or code block you select, records what **actually** happened — every call, how long it took, what went in and came out, and where it failed — and shows it as a call tree and timeline inside VS Code. Click any call to jump to its source.
 
@@ -38,22 +38,22 @@ A debugger tells you the state *right now*. A profiler tells you where time goes
 ### Call tree and call details
 Every call with its real duration, severity, arguments and return value. Select a call to see its details, then **Open Source** to jump to the code.
 
-<img alt="Call tree and details (dark theme)" src="[https://github.com/maryamtahir9/tracelens/main/docs/images/call-tree-dark.png](https://github.com/maryamtahir9/tracelens/blob/main/docs/images/call-tree-dark.png)" width="860">
+<img alt="Call tree and details (dark theme)" src="https://raw.githubusercontent.com/maryamtahir9/tracelens/main/docs/images/call-tree-dark.png" width="860">
 
 ### Timeline
 Bars are placed by measured start and end times, so you can see what ran when, and what waited on what.
 
-<img alt="Timeline (dark theme)" src="https://raw.github.com/maryamtahir9/tracelens/blob/main/docs/images/timeline-dark.png" width="860">
+<img alt="Timeline (dark theme)" src="https://raw.githubusercontent.com/maryamtahir9/tracelens/main/docs/images/timeline-dark.png" width="860">
 
 ### Errors
 The failing call, the call path that led to it, and the exact source location.
 
-<img alt="Error trace (dark theme)" src="https://raw.github.com/maryamtahir9/tracelens/blob/main/docs/images/error-trace-dark.png" width="860">
+<img alt="Error trace (dark theme)" src="https://raw.githubusercontent.com/maryamtahir9/tracelens/main/docs/images/error-trace-dark.png" width="860">
 
 ### Light theme
 TraceLens adapts to your VS Code theme.
 
-<img alt="Call tree (light theme)" src="https://raw.github.com/maryamtahir9/tracelens/blob/main/docs/images/call-tree-light.png" width="860">
+<img alt="Call tree (light theme)" src="https://raw.githubusercontent.com/maryamtahir9/tracelens/main/docs/images/call-tree-light.png" width="860">
 
 <sub>Screenshots show the TraceLens panel rendered from real traces of the demo scripts in <a href="https://github.com/maryamtahir9/tracelens/tree/main/examples"><code>examples/</code></a>.</sub>
 
