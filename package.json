@@ -1,0 +1,251 @@
+{
+  "name": "tracelens",
+  "displayName": "TraceLens",
+  "description": "See what happens when your code runs. Real execution tracing, call trees and timelines for Python, JavaScript and TypeScript.",
+  "version": "1.0.2",
+  "publisher": "Mythra",
+  "license": "MIT",
+  "icon": "icon.png",
+  "homepage": "https://github.com/maryamtahir9/tracelens#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maryamtahir9/tracelens.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maryamtahir9/tracelens/issues"
+  },
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18"
+  },
+  "categories": [
+    "Debuggers",
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "debugging",
+    "tracing",
+    "performance",
+    "developer tools",
+    "execution",
+    "call tree",
+    "profiling",
+    "visualization",
+    "python",
+    "javascript",
+    "typescript"
+  ],
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onView:tracelens.sidebar"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tracelens.traceExecution",
+        "title": "Trace Execution",
+        "category": "TraceLens",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "tracelens.traceCurrentFunction",
+        "title": "Trace Current Function",
+        "category": "TraceLens",
+        "icon": "$(symbol-function)"
+      },
+      {
+        "command": "tracelens.openLastTrace",
+        "title": "Open Last Trace",
+        "category": "TraceLens",
+        "icon": "$(history)"
+      },
+      {
+        "command": "tracelens.clearHistory",
+        "title": "Clear Trace History",
+        "category": "TraceLens",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "tracelens.show",
+        "title": "Show TraceLens",
+        "category": "TraceLens",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "tracelens.cancelTrace",
+        "title": "Cancel Current Trace",
+        "category": "TraceLens",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "tracelens.openHistoryEntry",
+        "title": "Open Trace History Entry",
+        "category": "TraceLens"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "tracelens.traceExecution",
+          "when": "editorHasSelection && resourceLangId =~ /^(python|javascript|typescript)$/",
+          "group": "tracelens@1"
+        },
+        {
+          "command": "tracelens.traceCurrentFunction",
+          "when": "!editorHasSelection && resourceLangId =~ /^(python|javascript|typescript)$/",
+          "group": "tracelens@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "tracelens.traceExecution",
+          "when": "editorLangId =~ /^(python|javascript|typescript)$/"
+        },
+        {
+          "command": "tracelens.traceCurrentFunction",
+          "when": "editorLangId =~ /^(python|javascript|typescript)$/"
+        },
+        {
+          "command": "tracelens.cancelTrace",
+          "when": "tracelens.tracing"
+        },
+        {
+          "command": "tracelens.openHistoryEntry",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "tracelens.cancelTrace",
+          "when": "view == tracelens.sidebar && tracelens.tracing",
+          "group": "navigation@1"
+        },
+        {
+          "command": "tracelens.clearHistory",
+          "when": "view == tracelens.sidebar",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tracelens",
+          "title": "TraceLens",
+          "icon": "media/tracelens-activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "tracelens": [
+        {
+          "id": "tracelens.sidebar",
+          "name": "TraceLens"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "TraceLens",
+      "properties": {
+        "traceLens.executionTimeout": {
+          "type": "number",
+          "default": 10000,
+          "minimum": 500,
+          "maximum": 600000,
+          "description": "Maximum wall-clock time (ms) a trace may run before the traced process is terminated."
+        },
+        "traceLens.maxTraceEvents": {
+          "type": "number",
+          "default": 10000,
+          "minimum": 100,
+          "maximum": 1000000,
+          "description": "Maximum number of function calls recorded per trace. Further calls are not recorded (their time is still included in their parent)."
+        },
+        "traceLens.slowThresholdMs": {
+          "type": "number",
+          "default": 250,
+          "minimum": 1,
+          "description": "Calls at or above this duration (ms) are flagged as slow."
+        },
+        "traceLens.moderateThresholdMs": {
+          "type": "number",
+          "default": 50,
+          "minimum": 1,
+          "description": "Calls at or above this duration (ms) are flagged as moderate."
+        },
+        "traceLens.criticalThresholdMs": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 1,
+          "description": "Calls at or above this duration (ms) are flagged as critical."
+        },
+        "traceLens.historyLimit": {
+          "type": "number",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Number of recent traces to remember (metadata only; source code is never stored)."
+        },
+        "traceLens.showArguments": {
+          "type": "boolean",
+          "default": true,
+          "description": "Capture and display function arguments (truncated string representations). Disable if arguments may contain sensitive data."
+        },
+        "traceLens.showReturnValues": {
+          "type": "boolean",
+          "default": true,
+          "description": "Capture and display function return values (truncated string representations)."
+        },
+        "traceLens.captureConsole": {
+          "type": "boolean",
+          "default": true,
+          "description": "Capture stdout/stderr of the traced process and show it in the trace view."
+        },
+        "traceLens.autoOpenTrace": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically open the TraceLens panel when a trace finishes."
+        },
+        "traceLens.pythonPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "Optional path to a Python 3 interpreter. Leave empty to use the interpreter selected in the Python extension."
+        },
+        "traceLens.nodePath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "Optional path to a Node.js executable. Leave empty to use 'node' from PATH (falling back to VS Code's bundled runtime)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src",
+    "test": "npm run compile && node scripts/run-tests.js",
+    "verify": "npm run compile && npm run lint && node scripts/run-tests.js && node scripts/verify-package.js",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "acorn": "^8.12.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "eslint": "^9.9.0",
+    "jsdom": "^30.1.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.2.0"
+  }
+}
